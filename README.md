@@ -9,7 +9,7 @@ OpenAI API: Integrazione con il modello GPT-3.5 per il processamento del linguag
 
 ## Prerequisiti
 Node.js installato sul tuo computer
-Chiave API per OpenAI GPT-3.5
+API Key per OpenAI GPT-3.5 (sostituire <OPENAI_API_KEY> con la tua chiave API effettiva in server.js)
 
 ## Setup
 
