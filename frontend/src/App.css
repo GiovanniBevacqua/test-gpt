@@ -1,6 +1,6 @@
 #root {
     width: 100vw;
-    min-height: 100vh;
+    min-height: calc(100vh - 2rem);
     padding: 1rem;
     background-color: var(--color-white);
 }
@@ -52,8 +52,12 @@ form button:hover {
 .chat {
     display: grid;
     gap: 1rem;
-    min-height: 100vh;
+    min-height: calc(100vh - 1rem);
     grid-auto-rows: min-content;
+}
+.chat-end {
+    display: grid;
+    height: 1rem;
 }
 .chat-bubble {
     padding: .8rem 1rem;

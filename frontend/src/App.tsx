@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useState } from 'react';
+import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import './App.css';
 
 interface chatAction {
@@ -28,65 +28,71 @@ const chatReducer = (state: chatState, action: chatAction): chatState => {
 };
 
 const App: React.FC = () => {
-const [input, setInput] = useState('');
-const [chatState, dispatch] = useReducer(chatReducer, {
-    messages: []
-});
-
-const submitHandler = useCallback(async (event?: React.FormEvent) => {
-    event?.preventDefault();
-    dispatch({
-        type: 'SET',
-        role: 'user',
-        text: input
+    const chatRef = useRef<HTMLDivElement>(null);
+    const chatEndRef = useRef<HTMLDivElement>(null);
+    const [input, setInput] = useState('');
+    const [chatState, dispatch] = useReducer(chatReducer, {
+        messages: []
     });
-    setInput('');
-    try {
-        const res = await fetch('http://localhost:5000/api/gpt', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({input}),
-        });
-        if (!res.ok) {
-            throw new Error(`Request failed with status ${res.status}`);
-        }
-        const data = await res.json();
+
+    const submitHandler = useCallback(async (event?: React.FormEvent) => {
+        event?.preventDefault();
         dispatch({
             type: 'SET',
-            role: 'assistant',
-            text: data.response
+            role: 'user',
+            text: input
         });
-    } catch (error: any) {
-        console.error('Errore durante la richiesta:', error.message);
-    }
-}, [input]);
+        setInput('');
+        try {
+            const res = await fetch('http://localhost:5000/api/gpt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({input}),
+            });
+            if (!res.ok) {
+                throw new Error(`Request failed with status ${res.status}`);
+            }
+            const data = await res.json();
+            dispatch({
+                type: 'SET',
+                role: 'assistant',
+                text: data.response
+            });
+        } catch (error: any) {
+            console.error('Errore durante la richiesta:', error.message);
+        }
+    }, [input]);
 
+    useEffect(() => {
+        (chatRef.current?.getBoundingClientRect() && chatRef.current?.getBoundingClientRect().height > window.innerHeight)
+        && chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [chatState.messages]);
 
-
-return (
-    <div className='App'>
-        <div className='chat'>
-            {chatState.messages?.map((message, index) => {
-                return (
-                    <div className={`chat-bubble --${message.role}`} key={`message-${index}`}>
-                        <div className='chat-role'>{message.role}</div>
-                        <div className='chat-text'>{message.text}</div>
-                    </div>
-                )
-            })}
+    return (
+        <div className='App'>
+            <div className='chat' ref={chatRef}>
+                {chatState.messages?.map((message, index) => {
+                    return (
+                        <div className={`chat-bubble --${message.role}`} key={`message-${index}`}>
+                            <div className='chat-role'>{message.role}</div>
+                            <div className='chat-text'>{message.text}</div>
+                        </div>
+                    )
+                })}
+                <div ref={chatEndRef} className='chat-end'/>
+            </div>
+            <form onSubmit={submitHandler}>
+                <input
+                    type='text'
+                    value={input}
+                    placeholder='Chiedi qualcosa'
+                    onChange={event => setInput(event.target.value)}
+                />
+                <button type='submit'>Invia</button>
+            </form>
         </div>
-        <form onSubmit={submitHandler}>
-            <input
-                type='text'
-                value={input}
-                placeholder='Chiedi qualcosa'
-                onChange={event => setInput(event.target.value)}
-            />
-            <button type='submit'>Invia</button>
-        </form>
-    </div>
     );
 }
 
