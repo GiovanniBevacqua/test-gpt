@@ -1,0 +1,73 @@
+#root {
+    width: 100vw;
+    min-height: 100vh;
+    padding: 1rem;
+    background-color: var(--color-white);
+}
+form {
+    margin: 2rem;
+    position: sticky;
+    bottom: 2rem;
+    width: calc(80% - 4rem);
+    display: grid;
+    align-items: center;
+    border-radius: 5rem;
+    overflow: hidden;
+    margin: 2rem auto;
+}
+form input {
+    padding: 1rem;
+    border-radius: 5rem;
+    border: 1px solid var(--color-grey);
+    transition: background-color .2s ease-in-out;
+    outline: none;
+}
+form input:focus {
+    background-color: var(--color-light-blue);
+}
+form button {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    padding: 0 2rem;
+    height: calc(100% - 2px);
+    border-radius: 5rem;
+    background-color: var(--color-light-grey);
+    transition: background-color .2s ease-in-out;
+    border: none;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-progress-appearance: none;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+form input:focus + button {
+    background-color: var(--color-white);
+}
+form button:hover {
+    background-color: var(--color-blue) !important;
+}
+.chat {
+    display: grid;
+    gap: 1rem;
+    min-height: 100vh;
+    grid-auto-rows: min-content;
+}
+.chat-bubble {
+    padding: .8rem 1rem;
+    border-radius: .6rem;
+    background-color: var(--color-blue);
+    width: fit-content;
+    max-width: 80%;
+}
+.chat-bubble.--user {
+    justify-self: flex-end;
+    text-align: right;
+    background-color: var(--color-light-grey);
+}
+.chat-role {
+    font-size: .8rem;
+    color: var(--color-grey);
+}
