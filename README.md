@@ -24,7 +24,7 @@ npm install vite typescript
 ## Installare le dipendenze per il backend
 cd ../backend
 
-npm install
+npm install express body-parser cors axios
 
 # Avvio dell'applicazione
 ## Avviare il frontend (React)
