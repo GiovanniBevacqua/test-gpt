@@ -9,7 +9,7 @@ OpenAI API: Integrazione con il modello GPT-3.5 per il processamento del linguag
 
 ## Prerequisiti
 Node.js installato sul tuo computer
-API Key per OpenAI GPT-3.5 (sostituire <OPENAI_API_KEY> con la tua chiave API effettiva in server.js)
+API Key per OpenAI GPT-3.5 (sostituire <OPENAI_API_KEY> con la tua chiave API effettiva in index.js)
 
 ## Setup
 
@@ -18,21 +18,25 @@ git clone https://github.com/GiovanniBevacqua/test-gpt.git
 
 ## Installare le dipendenze per il frontend
 cd test-gpt/frontend
+
 npm install vite typescript
 
 ## Installare le dipendenze per il backend
 cd ../backend
+
 npm install
 
 # Avvio dell'applicazione
 ## Avviare il frontend (React)
 cd ../frontend
+
 npm run dev
 
 Il frontend sarà disponibile all'indirizzo http://localhost:5173.
 
 ## Avviare il backend (Node.js con Express)
 cd ../backend
+
 node index.js
 
 Il backend sarà disponibile all'indirizzo http://localhost:5000.
