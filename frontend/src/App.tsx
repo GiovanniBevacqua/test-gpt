@@ -44,7 +44,7 @@ const App: React.FC = () => {
         });
         setInput('');
         try {
-            const res = await fetch('http://localhost:5000/api/gpt', {
+            const res = await fetch('http://localhost:5001/api/gpt', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ const App: React.FC = () => {
             dispatch({
                 type: 'SET',
                 role: 'assistant',
-                text: data.response
+                text: data.choice?.message?.content
             });
         } catch (error: any) {
             console.error('Errore durante la richiesta:', error.message);
